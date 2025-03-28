@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Virtual environment
+venv/
+
+# Django stuff
+*.sqlite3
+db.sqlite3
+
+# OS or editor
+.DS_Store
+.vscode/
+.idea/
+
+# Optional: ignore images if you don't want them in repo TODO - change this to only media folder
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.webp
