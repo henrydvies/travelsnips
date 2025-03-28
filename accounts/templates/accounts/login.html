@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'js/accounts.js' %}" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="register-container">
+            <h1>Login</h1>
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <label>Username</label><br>
+                <input type="text" name="username"><br>
+            
+                <label>Password</label><br>
+                <input type="password" name="password"><br>
+
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+    
+
+
+
+</body>
+</html>
