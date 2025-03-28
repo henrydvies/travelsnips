@@ -18,12 +18,16 @@ def register_view(request):
             messages.error(request, "Passwords do not match.")
             return redirect('register')
 
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists.")
+            return redirect('register')
+        
         # Create the user
         user = User.objects.create_user(username=username, email=email, password=password1)
 
         # Log the user in automatically (optional)
         login(request, user)
-        return redirect('landing')
+        return redirect('landingpage')
     else:
         # If GET request, just render the registration template
         return render(request, 'accounts/register.html')

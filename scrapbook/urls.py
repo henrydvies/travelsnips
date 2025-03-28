@@ -22,4 +22,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     #path("", root_redirect_view, name="root_redirect"),
     path("accounts/", include("accounts.urls")),
+    path("landingpage/", include("landingpage.urls")),
 ]
