@@ -3,8 +3,11 @@ __pycache__/
 *.py[cod]
 *.pyc
 
-# Virtual environment
+# Virtual environment - specific to your project structure
 venv/
+venv/**/*
+/venv/
+**/venv/**
 
 # Django stuff
 *.sqlite3
