@@ -3,17 +3,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Landing Page</title>
+    <title>TravelSnips - Share Your Journey</title> <!-- CHANGED: updated title -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/landingpage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}"> <!-- CHANGED: added navbar CSS -->
+    <script src="{% static 'js/navbar.js' %}" defer></script> <!-- CHANGED: added navbar JS -->
 </head>
 <body>
-    <div class="main-container">
-        <div class="landing-container">
-            <h1>Welcome, {{ user.username }}!</h1>
-            <p>This is your landing page for testing functionality.</p>
-
+    <!-- Include the navbar --> <!-- CHANGED: added navbar include -->
+    {% include 'navbar.html' %} <!-- CHANGED: added navbar include -->
+    
+    <div class="hero-section"> <!-- CHANGED: added hero section -->
+        <div class="hero-content">
+            <h1>Capture Your Adventures</h1>
+            <p>Create beautiful travel scrapbooks and share your journeys with the world</p>
+            {% if not user.is_authenticated %}
+                <div class="hero-buttons">
+                    <a href="{% url 'register' %}" class="btn btn-primary">Get Started</a>
+                    <a href="{% url 'login' %}" class="btn btn-secondary">Log In</a>
+                </div>
+            {% else %}
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Create New Trip</a>
+                    <a href="#" class="btn btn-secondary">Explore Trips</a>
+                </div>
+            {% endif %}
         </div>
     </div>
+    
+    <div class="features-section"> <!-- CHANGED: added features section -->
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Collect Memories</h3>
+                    <p>Upload photos from your trips and organize them chronologically</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✏️</div>
+                    <h3>Tell Your Story</h3>
+                    <p>Add descriptions, anecdotes, and travel tips to your photos</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>Map Your Journey</h3>
+                    <p>Visualize your route and highlight the places you've visited</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Share Experiences</h3>
+                    <p>Share your travel scrapbook with friends or keep it private</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="featured-trips"> <!-- CHANGED: added featured trips section -->
+        <div class="container">
+            <h2 class="section-title">Featured Trips</h2>
+            <div class="trips-grid">
+                <!-- Sample trips - replace with actual data from your database -->
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('{% static 'images/placeholder1.jpg' %}')"></div>
+                    <div class="trip-content">
+                        <h3>Exploring Japan</h3>
+                        <p class="trip-author">By TravelLover</p>
+                        <p class="trip-excerpt">Two weeks of cultural immersion in Tokyo, Kyoto, and Osaka...</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('{% static 'images/placeholder2.jpg' %}')"></div>
+                    <div class="trip-content">
+                        <h3>Italian Adventure</h3>
+                        <p class="trip-author">By WanderlustSoul</p>
+                        <p class="trip-excerpt">From the canals of Venice to the hills of Tuscany...</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image" style="background-image: url('{% static 'images/placeholder3.jpg' %}')"></div>
+                    <div class="trip-content">
+                        <h3>Costa Rica Escape</h3>
+                        <p class="trip-author">By NatureExplorer</p>
+                        <p class="trip-excerpt">Rainforests, beaches, and wildlife in Central America...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more">
+                <a href="#" class="btn btn-outline">View More Trips</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="site-footer"> <!-- CHANGED: added footer section -->
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>TravelSnips</h3>
+                    <p>Share your journey, inspire others</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Site</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Explore</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TravelSnips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

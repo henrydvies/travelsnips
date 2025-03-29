@@ -23,7 +23,7 @@ class SubPost(models.Model):  # Subpost model
     created_at = models.DateTimeField(auto_now_add=True)  #
     
     def __str__(self):
-        return f"SubPost {self.order} for {self.post.title}"  #
+        return f"SubPost {self.order} for {self.post.title}"
 
 
 class PostImage(models.Model):  # Model for images linked to a subpost
