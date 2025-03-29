@@ -1,8 +1,6 @@
 from django.db import models
 from django.conf import settings
 
-from django.db import models
-from django.conf import settings  # to reference the user model
 
 class Post(models.Model):  # Main post model
     title = models.CharField(max_length=200)  #
@@ -15,7 +13,7 @@ class Post(models.Model):  # Main post model
     )
     
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 class SubPost(models.Model):  # Subpost model
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='subposts')
