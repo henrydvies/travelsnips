@@ -1,0 +1,86 @@
+/* =====================
+    MAIN CONTAINER STYLING 
+===================== */
+
+
+/* POSITIONING */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* STYLING */
+.main-container {
+    height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #08a57e;
+}
+
+/* =====================
+    REGISTER PAGE
+===================== */
+.register-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.register-container:hover {
+    /* When hovered, increase size a bit and add shadow */
+    transform: scale(1.01);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.register-container h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.register-container form input,
+.register-container form button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.register-container form button {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-container form button:hover {
+    background-color: #45a049;
+}
+
+/* =====================
+    MOBILE TWEAKS
+===================== */
+@media (max-width: 500px) {
+    .register-container {
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .register-container h2 {
+        font-size: 1.3rem;
+    }
+}
