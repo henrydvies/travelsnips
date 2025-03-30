@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Linked Accounts - TravelSnips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <script src="{% static 'js/navbar.js' %}" defer></script>
+    <script src="{% static 'js/linked-accounts.js' %}" defer></script>
+</head>
+<body>
+    <!-- Include the navbar -->
+    {% include 'navbar.html' %}
+    
+    <div class="account-container">
+        <div class="account-panel">
+            <h1>Manage Linked Accounts</h1>
+            
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <div class="search-section">
+                <h3>Find People to Link</h3>
+                <p>Connect with other users to share travel experiences.</p>
+                
+                <form method="GET" action="{% url 'linked_accounts' %}">
+                    <div class="search-input-group">
+                        <input type="text" name="search" placeholder="Search by username" value="{{ search_query }}">
+                        <button type="submit" class="btn-sm btn-add">Search</button>
+                    </div>
+                </form>
+                
+                {% if search_query %}
+                    <div class="search-results">
+                        <h3>Search Results</h3>
+                        {% if search_results %}
+                            <ul class="user-list">
+                                {% for user in search_results %}
+                                    <li class="user-item">
+                                        <span class="username">{{ user.username }}</span>
+                                        <a href="{% url 'link_request' user.id %}" class="btn-sm btn-add">Link Account</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No users found matching "{{ search_query }}".</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="linked-accounts-section">
+                <h3 class="section-heading">Your Linked Accounts</h3>
+                {% if linked_users %}
+                    <ul class="user-list">
+                        {% for user in linked_users %}
+                            <li class="user-item">
+                                <span class="username">{{ user.username }}</span>
+                                <button class="btn-sm btn-remove unlink-btn" data-user-id="{{ user.id }}">Unlink</button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>You don't have any linked accounts yet.</p>
+                {% endif %}
+                
+                <div class="help-text">
+                    <p>When you link accounts with another user, you'll be able to see each other's posts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSRF Token for AJAX requests -->
+    <form id="csrf-form">
+        {% csrf_token %}
+    </form>
+
+    <!-- Pass URLs to JavaScript -->
+    <script>
+        // URL variables for JavaScript
+        const unlinkUrl = "{% url 'unlink_account' 0 %}".replace('0/', '');
+    </script>
+</body>
+</html>

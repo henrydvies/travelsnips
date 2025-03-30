@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('linked-accounts/', views.linked_accounts_view, name='linked_accounts'),
     path('link-request/<int:user_id>/', views.link_request_view, name='link_request'),
+    path('unlink-account/<int:user_id>/', views.unlink_account_view, name='unlink_account'),
 ]

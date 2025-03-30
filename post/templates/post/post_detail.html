@@ -17,13 +17,17 @@
     
     <div class="container post-container">
         <div class="post-header">
-            {% if post.post_icon %}
-                <img src="{{ post.post_icon.url }}" alt="{{ post.title }}" class="post-icon">
-            {% endif %}
-            <h1>{{ post.title }}</h1>
-            <div class="post-meta">
-                <span class="post-author">By {{ post.owner.username }}</span>
-                <span class="post-date">{{ post.created_at|date:"F j, Y" }}</span>
+            <div class="post-title-container">
+                {% if post.post_icon %}
+                    <img src="{{ post.post_icon.url }}" alt="{{ post.title }}" class="post-icon">
+                {% endif %}
+                <div class="post-title-info">
+                    <h1>{{ post.title }}</h1>
+                    <div class="post-meta">
+                        <span class="post-author">By {{ post.owner.username }}</span>
+                        <span class="post-date">{{ post.created_at|date:"F j, Y" }}</span>
+                    </div>
+                </div>
             </div>
             <div class="post-description">
                 {{ post.description }}

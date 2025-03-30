@@ -346,3 +346,50 @@
     border: 2px solid #08a57e;
     /* Use your theme color */
 }
+
+/* Update these styles in post.css */
+
+.post-title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.post-title-info {
+    flex: 1;
+}
+
+.post-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 1.5rem;
+    border: 1px solid #ddd;
+}
+
+.post-header h1 {
+    color: #08a57e;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+    /* Remove default top margin */
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .post-title-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-icon {
+        margin-bottom: 1rem;
+        margin-right: 0;
+    }
+}
