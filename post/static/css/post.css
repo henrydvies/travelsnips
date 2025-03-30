@@ -311,6 +311,9 @@
 .file-preview {
     margin-top: 10px;
     min-height: 60px;
+    max-width: 150px;
+    /* Limit width */
+    display: inline-block;
 }
 
 .icon-preview {
@@ -318,4 +321,28 @@
     max-height: 100px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    object-fit: cover;
+    /* Maintain aspect ratio but cover container */
+}
+
+.post-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+    float: left;
+    /* Option to float next to title */
+    border: 1px solid #ddd;
+}
+
+/* If you want a circular icon */
+.post-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #08a57e;
+    /* Use your theme color */
 }

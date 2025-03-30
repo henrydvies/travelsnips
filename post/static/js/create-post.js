@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.addEventListener('click', function () {
             const title = document.getElementById('title').value;
             const description = document.getElementById('description').value;
+            const iconFile = postIconInput.files[0];
 
             if (!title) {
                 showStatus('Please enter a title for your post.', 'error');
@@ -61,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Only append file if one was selected
             if (iconFile) {
+                console.log("Icon file selected:", iconFile);
                 formData.append('post_icon', iconFile);
             }
 
             // Send form data to server
-            console.log('Submitting form data:', window.location.pathname); // Debugging line
             fetch(window.location.pathname, {
                 method: 'POST',
                 headers: {
