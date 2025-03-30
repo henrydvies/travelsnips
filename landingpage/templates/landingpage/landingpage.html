@@ -3,17 +3,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Landing Page</title>
+    <title>TravelSnips - Share Your Journey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/landingpage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <script src="{% static 'js/navbar.js' %}" defer></script>
+    <script src="{% static 'js/landingpage.js' %}" defer></script>
 </head>
 <body>
-    <div class="main-container">
-        <div class="landing-container">
-            <h1>Welcome, {{ user.username }}!</h1>
-            <p>This is your landing page for testing functionality.</p>
-
+    <!-- Include the navbar -->
+    {% include 'navbar.html' %}
+    
+    <div class="container landing-container">
+        <div class="post-selection-panel">
+            <h1>TravelSnips</h1>
+            
+            <div class="form-group">
+                <label for="post_id">Select a Post:</label>
+                <select id="post_id" class="post-dropdown">
+                    <option value="">-- Select a post --</option>
+                    {% for post in posts %}
+                        <option value="{{ post.id }}" data-icon="{% if post.post_icon %}{{ post.post_icon.url }}{% endif %}">
+                            {{ post.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button id="viewPostBtn" class="btn btn-primary">View Post</button>
+            </div>
+            
+            <div class="create-post-section">
+                <button id="createPostBtn" class="btn btn-create">Create New Post</button>
+            </div>
         </div>
     </div>
+
+    <!-- Pass URLs to JavaScript -->
+    <script>
+        // URL variables for JavaScript
+        const createPostUrl = "{% url 'create_post' %}";
+    </script>
 </body>
-</html>
+</html> 

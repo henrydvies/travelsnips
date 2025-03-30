@@ -11,6 +11,7 @@ class Post(models.Model):  # Main post model
         on_delete=models.CASCADE, 
         related_name='posts'
     )
+    post_icon = models.ImageField(upload_to='post_icons/', blank=True, null=True)  # Optional icon for the post
     
     def __str__(self):
         return str(self.title)
@@ -18,12 +19,12 @@ class Post(models.Model):  # Main post model
 class SubPost(models.Model):  # Subpost model
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='subposts')
     subpost_title = models.CharField(max_length=200)  # Title of the subpost
-    content = models.TextField()  # Content of the subpost
+    content = models.TextField(blank=True)  # Content of the subpost
     order = models.PositiveIntegerField(default=0)  # Allows ordering of subposts
     created_at = models.DateTimeField(auto_now_add=True)  #
     
     def __str__(self):
-        return f"SubPost {self.order} for {self.post.title}"  #
+        return f"SubPost {self.order} for {self.post.title}"
 
 
 class PostImage(models.Model):  # Model for images linked to a subpost
