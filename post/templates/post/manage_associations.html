@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage People - {{ post.title }} - TravelSnips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/landingpage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <script src="{% static 'js/navbar.js' %}" defer></script>
+    <script src="{% static 'js/manage-associations.js' %}" defer></script>
+</head>
+<body>
+    <!-- Include the navbar -->
+    {% include 'navbar.html' %}
+    
+    <div class="container form-container">
+        <div class="form-panel">
+            <h1>Manage People for "{{ post.title }}"</h1>
+            
+            <div class="section-heading">
+                <h3>Currently Associated</h3>
+            </div>
+            
+            <div class="people-container">
+                {% for user in associated_users %}
+                    <div class="person-card">
+                        <div class="person-info">
+                            <span class="person-name">{{ user.username }}</span>
+                        </div>
+                        <div class="person-actions">
+                            {% if user != request.user %}
+                                <button class="btn-sm btn-remove" data-user-id="{{ user.id }}">Remove</button>
+                            {% else %}
+                                <span class="self-tag">You</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No people associated with this post yet.</p>
+                {% endfor %}
+            </div>
+            
+            <div class="section-heading">
+                <h3>Available People</h3>
+            </div>
+            
+            <div class="people-container">
+                {% for user in linked_users %}
+                    {% if user not in associated_users %}
+                        <div class="person-card">
+                            <div class="person-info">
+                                <span class="person-name">{{ user.username }}</span>
+                            </div>
+                            <div class="person-actions">
+                                <button class="btn-sm btn-add" data-user-id="{{ user.id }}">Add</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <p>No linked users available to add.</p>
+                {% endfor %}
+            </div>
+            
+            <div class="form-actions">
+                <a href="{% url 'post_detail' post.id %}" class="btn btn-secondary">Back to Post</a>
+            </div>
+            
+            <div id="status-message" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- CSRF Token for AJAX requests -->
+    <form id="csrf-form">
+        {% csrf_token %}
+    </form>
+
+    <!-- Pass URLs to JavaScript -->
+    <script>
+        // URL variables for JavaScript
+        const postId = {{ post.id }};
+        const manageAssociationsUrl = "{% url 'manage_associations' post.id %}";
+        const postDetailUrl = "{% url 'post_detail' post.id %}";
+    </script>
+</body>
+</html>

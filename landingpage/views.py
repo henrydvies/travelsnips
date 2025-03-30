@@ -4,8 +4,8 @@ from post.models import Post
 
 @login_required
 def landing_view(request):
-    # Get all posts to display in the dropdown
-    posts = Post.objects.all().order_by('-created_at')
+    # Get all posts visible to the current user (own posts and linked users' posts)
+    posts = request.user.get_all_visible_posts()
     
     if request.method == 'POST':
         # Handle form submission

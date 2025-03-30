@@ -84,3 +84,209 @@ body {
         font-size: 1.3rem;
     }
 }
+
+
+/* =====================
+    LINKED ACCOUNTS PAGE
+===================== */
+
+/* Positioning */
+.account-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.account-panel {
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+}
+
+.search-input-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-input-group input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.people-container {
+    margin-bottom: 2rem;
+}
+
+.person-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.section-heading {
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+/* Styling */
+.account-panel {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.account-panel h1 {
+    color: #08a57e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.account-panel h3 {
+    color: #08a57e;
+    margin-top: 0;
+}
+
+.search-section p {
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background-color: #f8f9fa;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.user-item:hover {
+    background-color: #f0f0f0;
+}
+
+.username {
+    font-weight: 500;
+}
+
+.person-card {
+    background-color: #f8f9fa;
+}
+
+.person-card:hover {
+    background-color: #f0f0f0;
+}
+
+.self-tag {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background-color: #e2e2e2;
+    color: #555;
+    font-size: 0.8rem;
+    border-radius: 20px;
+}
+
+.btn-sm {
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-add {
+    background-color: #08a57e;
+    color: white;
+}
+
+.btn-remove {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.help-text {
+    color: #666;
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+/* Messages styling */
+.messages {
+    margin-bottom: 1.5rem;
+}
+
+.message {
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message.info {
+    background-color: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
+}
+
+/* =====================
+    ASSOCIATED PEOPLE STYLING
+===================== */
+.associated-people {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.associated-people h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: #08a57e;
+}
+
+.people-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.person-tag {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background-color: #e2f6f0;
+    color: #08a57e;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
