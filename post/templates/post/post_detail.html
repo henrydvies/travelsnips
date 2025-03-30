@@ -17,6 +17,9 @@
     
     <div class="container post-container">
         <div class="post-header">
+            {% if post.post_icon %}
+                <img src="{{ post.post_icon.url }}" alt="{{ post.title }}" class="post-icon">
+            {% endif %}
             <h1>{{ post.title }}</h1>
             <div class="post-meta">
                 <span class="post-author">By {{ post.owner.username }}</span>
@@ -24,6 +27,22 @@
             </div>
             <div class="post-description">
                 {{ post.description }}
+            </div>
+            
+            <!-- Associated People Section -->
+            <div class="associated-people">
+                <h3>People in this Post:</h3>
+                <div class="people-list">
+                    {% for person in associated_people %}
+                        <div class="person-tag">{{ person.username }}</div>
+                    {% empty %}
+                        <p>No people associated with this post.</p>
+                    {% endfor %}
+                </div>
+                
+                {% if is_owner %}
+                    <a href="{% url 'manage_associations' post.id %}" class="btn btn-sm">Manage People</a>
+                {% endif %}
             </div>
         </div>
         
@@ -49,10 +68,6 @@
                             </div>
                         {% endif %}
                     </div>
-                {% empty %}
-                    <div class="no-subposts">
-                        <p>No content has been added to this post yet.</p>
-                    </div>
                 {% endfor %}
             {% else %}
                 <div class="no-subposts">
@@ -63,6 +78,9 @@
         
         <div class="post-actions">
             <button id="backButton" class="btn btn-secondary">Back to Home</button>
+            {% if is_owner %}
+                <a href="#" class="btn btn-primary">Add Content</a>
+            {% endif %}
         </div>
     </div>
 
