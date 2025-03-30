@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Post - TravelSnips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/landingpage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <script src="{% static 'js/navbar.js' %}" defer></script>
+    <script src="{% static 'js/create-post.js' %}" defer></script>
+</head>
+<body>
+    <!-- Include the navbar -->
+    {% include 'navbar.html' %}
+    
+    <div class="container form-container">
+        <div class="form-panel">
+            <h1>Create New Post</h1>
+            
+            <div id="createPostForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" required placeholder="Enter post title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" rows="4" placeholder="Enter a brief description of your travel experience"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post_icon">Post Icon (optional):</label>
+                    <input type="file" id="post_icon" name="post_icon" accept="image/*">
+                    <div class="file-preview" id="image-preview"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="submitBtn" class="btn btn-primary">Create Post</button>
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="form-help">
+                <p>After creating your post, you'll be able to add content sections and images.</p>
+            </div>
+            
+            <div id="status-message" class="status-message"></div>
+        </div>
+    </div>
+
+</body>
+</html>
