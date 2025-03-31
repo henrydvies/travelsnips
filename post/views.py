@@ -43,7 +43,12 @@ def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description', '')
-        post_icon = request.FILES.get('post_icon')  # Get the uploaded file
+        post_icon = request.FILES.get('post_icon')
+        
+        # Get location data
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        location_name = request.POST.get('location_name', '')
         
         # Validate the title
         if title:
@@ -51,8 +56,15 @@ def create_post(request):
             post = Post.objects.create(
                 title=title,
                 description=description,
-                owner=request.user
+                owner=request.user,
+                location_name=location_name
             )
+            
+            # Set location coordinates if provided
+            if latitude and longitude:
+                post.latitude = float(latitude)
+                post.longitude = float(longitude)
+                post.save()
             
             # Add the current user as an associated person by default
             post.add_associated_person(request.user)
@@ -122,8 +134,6 @@ def manage_associations(request, post_id):
     
     return render(request, 'post/manage_associations.html', context)
 
-# post/views.py (add these new functions)
-
 @login_required
 def edit_post(request, post_id):
     """View to edit post details"""
@@ -188,9 +198,13 @@ def add_subpost(request, post_id):
         # Process images if any
         images = request.FILES.getlist('images')
         for i, image in enumerate(images):
+            # Get caption for this image
+            caption = request.POST.get(f'image_caption_{i}', '')
+            
             PostImage.objects.create(
                 subpost=subpost,
                 image=image,
+                caption=caption,
                 order=i
             )
         
@@ -232,9 +246,14 @@ def edit_subpost(request, subpost_id):
         for i, image in enumerate(new_images):
             # Get the current highest order
             highest_order = PostImage.objects.filter(subpost=subpost).aggregate(Max('order'))['order__max'] or -1
+            
+            # Get caption for this image
+            caption = request.POST.get(f'image_caption_{i}', '')
+            
             PostImage.objects.create(
                 subpost=subpost,
                 image=image,
+                caption=caption,
                 order=highest_order + 1 + i
             )
         
@@ -258,3 +277,28 @@ def edit_subpost(request, subpost_id):
         'content': subpost.content,
         'images': images
     })
+
+
+
+# In post/views.py
+@login_required
+def post_locations(request):
+    """API endpoint to get post locations for the map"""
+    # Get all posts visible to the current user
+    visible_posts = request.user.get_all_visible_posts()
+    
+    # Filter posts with location data and serialize the data
+    posts_with_location = [
+        {
+            'id': post.id,
+            'title': post.title,
+            'latitude': post.latitude,
+            'longitude': post.longitude,
+            'location_name': post.location_name,
+            'icon': post.post_icon.url if post.post_icon else None
+        }
+        for post in visible_posts
+        if post.latitude and post.longitude
+    ]
+    
+    return JsonResponse({'posts': posts_with_location})
