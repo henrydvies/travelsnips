@@ -17,16 +17,40 @@
     
     <div class="container post-container">
         <div class="post-header">
-            {% if post.post_icon %}
-                <img src="{{ post.post_icon.url }}" alt="{{ post.title }}" class="post-icon">
-            {% endif %}
-            <h1>{{ post.title }}</h1>
-            <div class="post-meta">
-                <span class="post-author">By {{ post.owner.username }}</span>
-                <span class="post-date">{{ post.created_at|date:"F j, Y" }}</span>
+            <div class="post-title-section">
+                <div class="post-title-container">
+                    {% if post.post_icon %}
+                        <img src="{{ post.post_icon.url }}" alt="{{ post.title }}" class="post-icon">
+                    {% endif %}
+                    <div class="post-title-info">
+                        <h1>{{ post.title }}</h1>
+                        <div class="post-meta">
+                            <span class="post-author">By {{ post.owner.username }}</span>
+                            <span class="post-date">{{ post.created_at|date:"F j, Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if is_associated %}
+                <div class="edit-buttons-container">
+                    <div class="edit-mode-container">
+                        <button id="toggleEditMode" class="btn btn-edit-toggle">
+                            <span class="edit-mode-off">Edit Post</span>
+                            <span class="edit-mode-on">Exit Edit Mode</span>
+                        </button>
+                    </div>
+                    
+                    <div class="edit-post-details edit-mode-only">
+                        <button id="editPostDetailsBtn" class="btn btn-edit">Edit Post Details</button>
+                    </div>
+                </div>
+                {% endif %}
             </div>
-            <div class="post-description">
-                {{ post.description }}
+            
+            <div class="post-description-wrapper">
+                <div class="post-description">
+                    {{ post.description }}
+                </div>
             </div>
             
             <!-- Associated People Section -->
@@ -51,6 +75,14 @@
                 {% for subpost in subposts %}
                     <div class="subpost-card">
                         <h2>{{ subpost.subpost_title }}</h2>
+                        
+                        <!-- Edit section button - visible in edit mode -->
+                        {% if is_associated %}
+                        <div class="edit-section-btn edit-mode-only">
+                            <button class="btn btn-edit edit-subpost-btn" data-subpost-id="{{ subpost.id }}">Edit Section</button>
+                        </div>
+                        {% endif %}
+                        
                         <div class="subpost-content">
                             {{ subpost.content|linebreaks }}
                         </div>
@@ -76,18 +108,30 @@
             {% endif %}
         </div>
         
+        <!-- Add Subpost button (initially hidden) - now positioned after the subposts -->
+        {% if is_associated %}
+        <div class="add-subpost-section edit-mode-only">
+            <button id="addSubpostBtn" class="btn btn-primary">Add New Section</button>
+        </div>
+        {% endif %}
+        
         <div class="post-actions">
             <button id="backButton" class="btn btn-secondary">Back to Home</button>
-            {% if is_owner %}
-                <a href="#" class="btn btn-primary">Add Content</a>
-            {% endif %}
         </div>
     </div>
+
+
+    <!-- Post Detail Modals -->
+    {% include 'post/edit_post_modal.html' %}
+    {% include 'post/add_subpost_modal.html' %}
+    {% include 'post/edit_subpost_modal.html' %}
 
     <!-- Pass URLs to JavaScript -->
     <script>
         // URL variables for JavaScript
         const landingPageUrl = "{% url 'landingpage' %}";
+        const postId = {{ post.id }};
+        const isAssociated = {% if is_associated %}true{% else %}false{% endif %};
     </script>
 </body>
 </html>

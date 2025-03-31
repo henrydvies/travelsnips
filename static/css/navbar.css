@@ -138,6 +138,27 @@ body {
     border-top: 1px solid #e9ecef;
 }
 
+/* In static/css/navbar.css */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.brand-logo {
+    height: 40px;
+    /* Adjust size as needed */
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.brand-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #08a57e;
+}
+
+
 /* =====================
     RESPONSIVE DESIGN
 ===================== */
@@ -175,5 +196,10 @@ body {
         position: static;
         box-shadow: none;
         padding-left: 1rem;
+    }
+
+    .brand-logo {
+        height: 35px;
+        /* Slightly smaller on mobile */
     }
 }

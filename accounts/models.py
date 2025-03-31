@@ -30,14 +30,16 @@ class CustomUser(AbstractUser):
     def get_all_visible_posts(self):
         """Get all posts visible to this user (own posts and linked users' posts)"""
         from post.models import Post
+        from django.db.models import Q
         
-        # Start with user's own posts
+        # Start with the user's own posts
         visible_posts = Post.objects.filter(owner=self)
         
         # Add posts from linked users
         linked_users = self.get_all_linked_users()
-        for user in linked_users:
-            visible_posts = visible_posts | Post.objects.filter(owner=user)
+        if linked_users:
+            linked_user_ids = [user.id for user in linked_users]
+            visible_posts = visible_posts | Post.objects.filter(owner_id__in=linked_user_ids)
         
         return visible_posts.distinct().order_by('-created_at')
 
