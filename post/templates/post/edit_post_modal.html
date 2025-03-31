@@ -1,0 +1,30 @@
+<div id="editPostModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Edit Post Details</h2>
+        
+        <form id="editPostForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="edit-title">Title:</label>
+            <input type="text" id="edit-title" name="title" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-description">Description:</label>
+            <textarea id="edit-description" name="description" rows="4"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-post-icon">Post Icon:</label>
+            <input type="file" id="edit-post-icon" name="post_icon" accept="image/*">
+            <div class="file-preview" id="edit-image-preview"></div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+        </div>
+        </form>
+    </div>
+</div>

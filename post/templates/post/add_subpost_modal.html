@@ -1,0 +1,30 @@
+<div id="addSubpostModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Add New Section</h2>
+        
+        <form id="addSubpostForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="subpost-title">Section Title:</label>
+            <input type="text" id="subpost-title" name="title" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="subpost-content">Content:</label>
+            <textarea id="subpost-content" name="content" rows="6"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="subpost-images">Images (optional):</label>
+            <input type="file" id="subpost-images" name="images" multiple accept="image/*">
+            <div class="file-preview" id="subpost-image-preview"></div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Section</button>
+            <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+        </div>
+        </form>
+    </div>
+</div>

@@ -53,11 +53,101 @@
     margin: 2rem 0;
 }
 
+/* Title section with edit buttons layout */
+.post-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.post-title-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.post-title-info {
+    flex: 1;
+}
+
+/* Edit buttons container */
+.edit-buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 1rem;
+    min-width: 120px;
+    /* Ensures buttons don't get too small */
+}
+
+.edit-mode-container {
+    margin-bottom: 0.75rem;
+}
+
+.edit-post-details {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Button styles */
+.btn-edit-toggle {
+    background-color: #6c5ce7;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.btn-edit-toggle:hover {
+    background-color: #5541d7;
+}
+
+.btn-edit:hover {
+    background-color: #e67e22;
+}
+
+/* Post description area */
+.post-description-wrapper {
+    width: 100%;
+    clear: both;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.post-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    display: block;
+    width: 100%;
+}
+
 /* Styling */
 .post-header h1 {
     color: #08a57e;
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+    margin-top: 0;
 }
 
 .post-author {
@@ -70,16 +160,24 @@
     margin-left: 1rem;
 }
 
-.post-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #555;
+.post-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 1.5rem;
+    border: 1px solid #ddd;
 }
 
+/* Subpost styling */
 .subpost-card {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 2rem;
+    border-top: 1px solid #eee;
 }
 
 .subpost-card h2 {
@@ -87,11 +185,25 @@
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 1.6rem;
+    display: inline-block;
 }
 
 .subpost-content {
     font-size: 1.1rem;
     line-height: 1.6;
+}
+
+/* Edit section button - positioned in the top right of each subpost */
+.edit-section-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+/* Separator line between subposts */
+.subpost-separator {
+    border-top: 1px dashed #eee;
+    margin: 3rem 0;
 }
 
 .gallery-item img {
@@ -115,6 +227,40 @@
     background-color: #f8f9fa;
     border-radius: 8px;
     color: #777;
+}
+
+/* =====================
+    PEOPLE IN THIS POST
+===================== */
+
+.associated-people {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.associated-people h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.people-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.person-tag {
+    background-color: #e1f5fe;
+    color: #0277bd;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-block;
 }
 
 /* =====================
@@ -213,42 +359,65 @@
 }
 
 /* =====================
-    RESPONSIVE DESIGN
+    EDIT MODE STYLES
 ===================== */
-@media (max-width: 768px) {
-    .post-header h1 {
-        font-size: 2rem;
-    }
 
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .form-panel {
-        padding: 1.5rem;
-    }
+/* Edit mode states */
+body:not(.edit-mode) .edit-mode-on {
+    display: none;
 }
 
-@media (max-width: 480px) {
-    .post-header h1 {
-        font-size: 1.8rem;
-    }
+body.edit-mode .edit-mode-off {
+    display: none;
+}
 
-    .post-meta {
-        display: flex;
-        flex-direction: column;
-    }
+/* Hide edit controls by default */
+.edit-mode-only {
+    display: none;
+}
 
-    .post-date {
-        margin-left: 0;
-    }
+/* Show edit controls only in edit mode */
+body.edit-mode .edit-mode-only {
+    display: block;
+}
+
+/* Add subpost section */
+.add-subpost-section {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #ddd;
+    clear: both;
+}
+
+.add-subpost-section .btn {
+    background-color: #08a57e;
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.add-subpost-section .btn:hover {
+    background-color: #078f6d;
+    transform: translateY(-2px);
+}
+
+/* Highlight effect for editable areas in edit mode */
+body.edit-mode .subpost-card {
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s ease;
+}
+
+body.edit-mode .subpost-card:hover {
+    box-shadow: 0 0 0 2px rgba(8, 165, 126, 0.3);
 }
 
 /* =====================
     LIGHTBOX GALLERY
 ===================== */
-
-/* Add these styles to your existing post.css file */
 
 .gallery-item {
     cursor: pointer;
@@ -295,24 +464,10 @@
     color: #08a57e;
 }
 
-@media (max-width: 768px) {
-    .lightbox img {
-        max-width: 95%;
-        max-height: 95%;
-    }
-
-    .lightbox-close {
-        top: 10px;
-        right: 20px;
-        font-size: 2rem;
-    }
-}
-
 .file-preview {
     margin-top: 10px;
     min-height: 60px;
     max-width: 150px;
-    /* Limit width */
     display: inline-block;
 }
 
@@ -322,18 +477,6 @@
     border-radius: 5px;
     border: 1px solid #ddd;
     object-fit: cover;
-    /* Maintain aspect ratio but cover container */
-}
-
-.post-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 15px;
-    float: left;
-    /* Option to float next to title */
-    border: 1px solid #ddd;
 }
 
 /* If you want a circular icon */
@@ -344,45 +487,61 @@
     object-fit: cover;
     margin-right: 15px;
     border: 2px solid #08a57e;
-    /* Use your theme color */
 }
 
-/* Update these styles in post.css */
-
-.post-title-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.post-title-info {
-    flex: 1;
-}
-
-.post-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 1.5rem;
-    border: 1px solid #ddd;
-}
-
-.post-header h1 {
-    color: #08a57e;
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    margin-top: 0;
-    /* Remove default top margin */
-}
-
-.post-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
+/* =====================
+    RESPONSIVE DESIGN
+===================== */
 @media (max-width: 768px) {
+    .post-header h1 {
+        font-size: 2rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-panel {
+        padding: 1.5rem;
+    }
+
+    .post-title-section {
+        flex-direction: column;
+    }
+
+    .post-title-container {
+        margin-bottom: 1rem;
+    }
+
+    .edit-buttons-container {
+        margin-left: 0;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .edit-mode-container {
+        margin-bottom: 0;
+        flex: 1;
+        margin-right: 0.5rem;
+    }
+
+    .edit-post-details {
+        flex: 1;
+        margin-left: 0.5rem;
+    }
+
+    .lightbox img {
+        max-width: 95%;
+        max-height: 95%;
+    }
+
+    .lightbox-close {
+        top: 10px;
+        right: 20px;
+        font-size: 2rem;
+    }
+
     .post-title-container {
         flex-direction: column;
         align-items: flex-start;
@@ -392,4 +551,158 @@
         margin-bottom: 1rem;
         margin-right: 0;
     }
+}
+
+@media (max-width: 480px) {
+    .post-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .post-meta {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-date {
+        margin-left: 0;
+    }
+
+    .edit-buttons-container {
+        flex-direction: column;
+    }
+
+    .edit-mode-container {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    .edit-post-details {
+        width: 100%;
+    }
+}
+
+/* =====================
+    MODAL STYLING
+===================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 700px;
+    animation: slideIn 0.3s;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+/* Current images in edit mode */
+.current-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.current-image-item {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.current-image-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.remove-image {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #ff5252;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+
+/* Image preview styling */
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.preview-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    position: relative;
+}
+
+.preview-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
