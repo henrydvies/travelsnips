@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 #from landingpage.views import root_redirect_view # TODO - Check whats needed
 
 urlpatterns = [
@@ -25,7 +26,11 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("landingpage/", include("landingpage.urls")),
     path("post/", include("post.urls")),  # Added post URLs
+    
+    # Root redirect
+    path("", RedirectView.as_view(url='/landingpage/landingpage', permanent=False), name='home'),
 ]
+
 
 
 # Serve media files in development
