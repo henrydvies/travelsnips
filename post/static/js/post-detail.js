@@ -125,6 +125,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('addSubpostForm').reset();
                 document.getElementById('subpost-image-preview').innerHTML = '';
 
+                // Clear caption container if it exists
+                const captionContainer = document.getElementById('image-caption-container');
+                if (captionContainer) {
+                    captionContainer.innerHTML = '';
+                }
+
                 // Show modal
                 showModal(addSubpostModal);
             });
@@ -165,6 +171,14 @@ document.addEventListener('DOMContentLoaded', function () {
                                     this.closest('.current-image-item').remove();
                                 });
 
+                                // Add caption if available
+                                if (image.caption) {
+                                    const captionDiv = document.createElement('div');
+                                    captionDiv.className = 'current-image-caption';
+                                    captionDiv.textContent = `Caption: ${image.caption}`;
+                                    imageItem.appendChild(captionDiv);
+                                }
+
                                 imageItem.appendChild(img);
                                 imageItem.appendChild(removeBtn);
                                 imagesContainer.appendChild(imageItem);
@@ -175,6 +189,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         // Clear new image preview
                         document.getElementById('edit-subpost-image-preview').innerHTML = '';
+
+                        // Clear caption container if it exists
+                        const captionContainer = document.getElementById('edit-image-caption-container');
+                        if (captionContainer) {
+                            captionContainer.innerHTML = '';
+                        }
 
                         // Show modal
                         showModal(editSubpostModal);
@@ -257,6 +277,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const formData = new FormData(addSubpostForm);
 
+                // Add caption data for each image
+                const captionInputs = document.querySelectorAll('#image-caption-container input');
+                captionInputs.forEach(input => {
+                    const index = input.dataset.fileIndex;
+                    formData.append(`image_caption_${index}`, input.value);
+                });
+
                 // Send create request
                 fetch(`/post/${postId}/add-subpost/`, {
                     method: 'POST',
@@ -304,6 +331,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
 
+                // Add caption data for each new image
+                const captionInputs = document.querySelectorAll('#edit-image-caption-container input');
+                captionInputs.forEach(input => {
+                    const index = input.dataset.fileIndex;
+                    formData.append(`image_caption_${index}`, input.value);
+                });
+
                 // Send update request
                 fetch(`/post/subpost/${subpostId}/edit/`, {
                     method: 'POST',
@@ -342,27 +376,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (postIconInput && postIconPreview) {
             postIconInput.addEventListener('change', function () {
-                previewImages(this.files, postIconPreview, true);
+                previewImages(this.files, postIconPreview, null, true);
             });
         }
 
         // Subpost images preview
         const subpostImagesInput = document.getElementById('subpost-images');
         const subpostImagesPreview = document.getElementById('subpost-image-preview');
+        const captionContainer = document.getElementById('image-caption-container');
 
         if (subpostImagesInput && subpostImagesPreview) {
             subpostImagesInput.addEventListener('change', function () {
-                previewImages(this.files, subpostImagesPreview);
+                previewImages(this.files, subpostImagesPreview, captionContainer);
             });
         }
 
         // Edit subpost images preview
         const editSubpostImagesInput = document.getElementById('edit-subpost-images');
         const editSubpostImagesPreview = document.getElementById('edit-subpost-image-preview');
+        const editCaptionContainer = document.getElementById('edit-image-caption-container');
 
         if (editSubpostImagesInput && editSubpostImagesPreview) {
             editSubpostImagesInput.addEventListener('change', function () {
-                previewImages(this.files, editSubpostImagesPreview);
+                previewImages(this.files, editSubpostImagesPreview, editCaptionContainer);
             });
         }
     }
@@ -370,9 +406,14 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * Preview selected images
      */
-    function previewImages(files, container, singleImage = false) {
+    function previewImages(files, container, captionContainer, singleImage = false) {
         // Clear preview container
         container.innerHTML = '';
+
+        // Clear captions container if provided
+        if (captionContainer) {
+            captionContainer.innerHTML = '';
+        }
 
         if (files.length > 0) {
             // Create grid container for multiple images
@@ -401,8 +442,34 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         const imgContainer = document.createElement('div');
                         imgContainer.className = 'preview-item';
+
+                        // Add filename
+                        const filenamePara = document.createElement('p');
+                        filenamePara.className = 'image-preview-filename';
+                        filenamePara.textContent = file.name;
+                        imgContainer.appendChild(filenamePara);
+
                         imgContainer.appendChild(img);
                         grid.appendChild(imgContainer);
+
+                        // Create caption input for this image if container exists
+                        if (captionContainer) {
+                            const captionGroup = document.createElement('div');
+                            captionGroup.className = 'caption-input-group';
+
+                            const captionImg = document.createElement('img');
+                            captionImg.src = e.target.result;
+                            captionGroup.appendChild(captionImg);
+
+                            const captionInput = document.createElement('input');
+                            captionInput.type = 'text';
+                            captionInput.name = `caption_${i}`;
+                            captionInput.placeholder = 'Add a caption for this image';
+                            captionInput.dataset.fileIndex = i;
+                            captionGroup.appendChild(captionInput);
+
+                            captionContainer.appendChild(captionGroup);
+                        }
                     }
                 };
 

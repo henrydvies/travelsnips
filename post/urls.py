@@ -8,4 +8,5 @@ urlpatterns = [
     path('<int:post_id>/edit/', views.edit_post, name='edit_post'),
     path('<int:post_id>/add-subpost/', views.add_subpost, name='add_subpost'),
     path('subpost/<int:subpost_id>/edit/', views.edit_subpost, name='edit_subpost'),
+    path('api/post-locations/', views.post_locations, name='post_locations'),
 ]

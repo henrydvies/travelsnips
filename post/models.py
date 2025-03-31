@@ -2,16 +2,21 @@ from django.db import models
 from django.conf import settings
 
 
-class Post(models.Model):  # Main post model
+class Post(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)  # optional description
+    description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(  # Link post to a user
+    owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
         related_name='posts'
     )
-    post_icon = models.ImageField(upload_to='post_icons/', blank=True, null=True)  # Optional icon for the post
+    post_icon = models.ImageField(upload_to='post_icons/', blank=True, null=True)
+    
+    # New location fields
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    location_name = models.CharField(max_length=255, blank=True)
     
     # Associated people for this post
     associated_people = models.ManyToManyField(
@@ -35,6 +40,10 @@ class Post(models.Model):  # Main post model
     def get_associated_people(self):
         """Get all associated people for this post"""
         return self.associated_people.all()
+    
+    def has_location(self):
+        """Check if this post has location data"""
+        return self.latitude is not None and self.longitude is not None
 
 
 class PostAssociation(models.Model):

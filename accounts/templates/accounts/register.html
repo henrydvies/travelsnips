@@ -2,17 +2,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'css/accounts.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}"> 
     <meta charset="UTF-8">
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{% static 'js/register.js' %}" defer></script> 
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="main-container">
         <div class="register-container">
             <h1>Register</h1>
-            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
             <form id="registerForm" action="{% url 'register' %}" method="POST"> 
                 {% csrf_token %}
                 <label>Username</label><br>
