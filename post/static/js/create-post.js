@@ -43,6 +43,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const description = document.getElementById('description').value;
             const iconFile = postIconInput.files[0];
 
+            // Get location data
+            const latitude = document.getElementById('latitude').value;
+            const longitude = document.getElementById('longitude').value;
+            const locationName = document.getElementById('location_name').value;
+
             if (!title) {
                 showStatus('Please enter a title for your post.', 'error');
                 return;
@@ -60,12 +65,17 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('title', title);
             formData.append('description', description);
 
+            // Add location data to form
+            formData.append('latitude', latitude);
+            formData.append('longitude', longitude);
+            formData.append('location_name', locationName);
+
             // Only append file if one was selected
             if (iconFile) {
                 console.log("Icon file selected:", iconFile);
                 formData.append('post_icon', iconFile);
             }
-
+            console.log("Submitting with coordinates:", latitude, longitude);
             // Send form data to server
             fetch(window.location.pathname, {
                 method: 'POST',

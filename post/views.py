@@ -50,21 +50,18 @@ def create_post(request):
         longitude = request.POST.get('longitude')
         location_name = request.POST.get('location_name', '')
         
+        # Debug logging
+        print(f"Received location data - latitude: {latitude}, longitude: {longitude}, name: {location_name}")
+        
         # Validate the title
         if title:
-            # Create the post
+            # Create the post without location data first
             post = Post.objects.create(
                 title=title,
                 description=description,
                 owner=request.user,
-                location_name=location_name
+                location_name=location_name,
             )
-            
-            # Set location coordinates if provided
-            if latitude and longitude:
-                post.latitude = float(latitude)
-                post.longitude = float(longitude)
-                post.save()
             
             # Add the current user as an associated person by default
             post.add_associated_person(request.user)
@@ -73,6 +70,16 @@ def create_post(request):
             if post_icon:
                 post.post_icon = post_icon
                 post.save()
+            
+            # Set location coordinates if provided
+            if latitude and longitude and latitude.strip() and longitude.strip():
+                try:
+                    post.latitude = float(latitude)
+                    post.longitude = float(longitude)
+                    post.save()
+                    print(f"Saved location coordinates: {post.latitude}, {post.longitude}")
+                except (ValueError, TypeError) as e:
+                    print(f"Error converting coordinates: {e}")
             
             # Redirect to the post detail page
             return redirect('post_detail', post_id=post.id)
